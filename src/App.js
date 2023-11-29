@@ -5,6 +5,7 @@ import Products from "./components/Products";
 import Header from "./components/layout/Header";
 import ProductDetails from "./components/ProductDetails";
 import Login from "./components/Login";
+import NotFound from "./components/NotFound";
 
 const App = () => {
   return (
@@ -25,7 +26,10 @@ const App = () => {
             <ProductDetails />
           </Route>
           <Route path="/login">
-            <Login/>
+            <Login />
+          </Route>
+          <Route path="*">
+            <NotFound />
           </Route>
         </Switch>
       </main>
