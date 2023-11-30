@@ -1,8 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [formIsValid, setFormIsValid] = useState(false);
+
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      console.log("checkinf for validity");
+      setFormIsValid(email.includes("@") && password.trim().length > 6);
+    }, 500);
+
+    return () => {
+      console.log("clean the things");
+
+      clearTimeout(identifier);
+    };
+  }, [email, password]);
+
+  const emailChangeHandler = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const passwordChangeHandler = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const signIn = (e) => {
+    e.preventDefault();
+    console.log(formIsValid);
+  };
+
   return (
     <div className="login">
       <Link to="/">
@@ -16,10 +46,15 @@ const Login = () => {
         <h1>Sign in</h1>
         <form>
           <h5>Email</h5>
-          <input type="text" />
+          <input type="text" value={email} onChange={emailChangeHandler} />
           <h5>Password</h5>
-          <input type="password" />
-          <button type="submit" className="login_signInButton">
+          <input
+            type="password"
+            value={password}
+            onChange={passwordChangeHandler}
+            autoComplete="off"
+          />
+          <button type="submit" className="login_signInButton" onClick={signIn}>
             Sign in
           </button>
         </form>
