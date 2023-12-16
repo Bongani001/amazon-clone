@@ -7,6 +7,7 @@ import ProductDetails from "./components/ProductDetails";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import { useEffect, useState } from "react";
+import AuthContext from "./context/authContext";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,10 +15,10 @@ const App = () => {
   useEffect(() => {
     const userInfo = localStorage.getItem("isLoggedIn");
 
-    if (userInfo == "1") {
+    if (userInfo === "1") {
       setIsLoggedIn(true);
     }
-  });
+  }, []);
 
   const loginHandler = (email, password) => {
     localStorage.setItem("isLoggedIn", "1");
@@ -30,7 +31,9 @@ const App = () => {
   };
 
   return (
-    <>
+    <AuthContext.Provider
+      value={{ isLoggedin: isLoggedIn, onLogout: logoutHandler }}
+    >
       <Header />
       <main>
         <Switch>
@@ -47,14 +50,14 @@ const App = () => {
             <ProductDetails />
           </Route>
           <Route path="/login">
-            <Login />
+            <Login onLogin={loginHandler} />
           </Route>
           <Route path="*">
             <NotFound />
           </Route>
         </Switch>
       </main>
-    </>
+    </AuthContext.Provider>
   );
 };
 

@@ -1,10 +1,13 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import AuthContext from "../../context/authContext";
 
 const Header = () => {
+  const ctx = useContext(AuthContext);
+
   return (
     <header className="header">
       <Link to="/">
@@ -19,12 +22,22 @@ const Header = () => {
         <SearchIcon className="search_icon" />
       </div>
       <div className="header_nav">
-        <Link to="/login">
-          <div className="header_option">
-            <span className="header_optionOne">Hello Guest</span>
-            <span className="header_optionTwo">Sign in</span>
-          </div>
-        </Link>
+        {ctx.isLoggedin ? (
+          <Link to="/">
+            <div className="header_option" onClick={ctx.onLogout}>
+              <span className="header_optionOne">Hello User</span>
+              <span className="header_optionTwo">Sign out</span>
+            </div>
+          </Link>
+        ) : (
+          <Link to="/login">
+            <div className="header_option">
+              <span className="header_optionOne">Hello Guest</span>
+              <span className="header_optionTwo">Sign in</span>
+            </div>
+          </Link>
+        )}
+
         <div className="header_option">
           <span className="header_optionOne">Returns</span>
           <span className="header_optionTwo">& Orders</span>

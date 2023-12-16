@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
 
-const Login = () => {
+const Login = ({onLogin}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);
@@ -30,7 +30,7 @@ const Login = () => {
 
   const signIn = (e) => {
     e.preventDefault();
-    console.log(formIsValid);
+    onLogin(email, password);
   };
 
   return (
