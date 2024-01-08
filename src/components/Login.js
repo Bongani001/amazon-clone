@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
+import AuthContext from "../context/authContext";
 
-const Login = ({onLogin}) => {
+const Login = () => {
+  const ctx = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);
@@ -30,7 +33,7 @@ const Login = ({onLogin}) => {
 
   const signIn = (e) => {
     e.preventDefault();
-    onLogin(email, password);
+    ctx.onLogin(email, password);
   };
 
   return (

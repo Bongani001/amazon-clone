@@ -4,8 +4,12 @@ import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import AuthContext from "../../context/authContext";
+import ShoppingContext from "../../context/shopping/shoppingContext";
 
 const Header = () => {
+  const shoppingContext = useContext(ShoppingContext);
+  const { basket } = shoppingContext;
+
   const ctx = useContext(AuthContext);
 
   return (
@@ -48,7 +52,9 @@ const Header = () => {
         </div>
         <div className="header_optionBasket">
           <ShoppingBasketIcon />
-          <span className="header_optionTwo header_basketCount">0</span>
+          <span className="header_optionTwo header_basketCount">
+            {basket.length}
+          </span>
         </div>
       </div>
     </header>
