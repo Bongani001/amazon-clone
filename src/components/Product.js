@@ -18,7 +18,7 @@ const Product = ({ id, title, image, rating, price }) => {
           {Array(rating)
             .fill()
             .map((_, i) => {
-              return <p> ⭐</p>;
+              return <p key={i}> ⭐</p>;
             })}
         </div>
         <p className="product_price">{price}</p>

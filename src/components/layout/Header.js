@@ -5,12 +5,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import AuthContext from "../../context/authContext";
 import ShoppingContext from "../../context/shopping/shoppingContext";
+import { auth } from "../../firebase";
 
 const Header = () => {
   const shoppingContext = useContext(ShoppingContext);
-  const { basket } = shoppingContext;
+  const { basket, user } = shoppingContext;
 
-  const ctx = useContext(AuthContext);
+  const handleAuthentication = () => {
+    if (user) {
+      auth.signOut();
+    }
+  };
 
   return (
     <header className="header">
@@ -26,22 +31,12 @@ const Header = () => {
         <SearchIcon className="search_icon" />
       </div>
       <div className="header_nav">
-        {ctx.isLoggedin ? (
-          <Link to="/">
-            <div className="header_option" onClick={ctx.onLogout}>
-              <span className="header_optionOne">Hello User</span>
-              <span className="header_optionTwo">Sign out</span>
-            </div>
-          </Link>
-        ) : (
-          <Link to="/login">
-            <div className="header_option">
-              <span className="header_optionOne">Hello Guest</span>
-              <span className="header_optionTwo">Sign in</span>
-            </div>
-          </Link>
-        )}
-
+        <Link to={!user && "/login"}>
+          <div className="header_option" onClick={handleAuthentication}>
+            <span className="header_optionOne">Hello {!user ? "Guest" : user.email}</span>
+            <span className="header_optionTwo">{user ? "Sign Out" : "Sign in"}</span>
+          </div>
+        </Link>
         <div className="header_option">
           <span className="header_optionOne">Returns</span>
           <span className="header_optionTwo">& Orders</span>

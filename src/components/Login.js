@@ -1,27 +1,28 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Login.css";
-import AuthContext from "../context/authContext";
+import ShoppingContext from "../context/shopping/shoppingContext";
+import { auth } from "../firebase";
 
 const Login = () => {
-  const ctx = useContext(AuthContext);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [formIsValid, setFormIsValid] = useState(false);
+  const history = useHistory();
 
-  useEffect(() => {
-    const identifier = setTimeout(() => {
-      console.log("checkinf for validity");
-      setFormIsValid(email.includes("@") && password.trim().length > 6);
-    }, 500);
+  const shoppingContext = useContext(ShoppingContext);
+  const { user } = shoppingContext;
+  // useEffect(() => {
+  //   const identifier = setTimeout(() => {
+  //     console.log("checkinf for validity");
+  //     setFormIsValid(email.includes("@") && password.trim().length > 6);
+  //   }, 500);
 
-    return () => {
-      console.log("clean the things");
+  //   return () => {
+  //     console.log("clean the things");
 
-      clearTimeout(identifier);
-    };
-  }, [email, password]);
+  //     clearTimeout(identifier);
+  //   };
+  // }, [email, password]);
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
@@ -33,7 +34,24 @@ const Login = () => {
 
   const signIn = (e) => {
     e.preventDefault();
-    ctx.onLogin(email, password);
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((auth) => {
+        history.push("/");
+      })
+      .catch((error) => alert(error.message));
+  };
+
+  const register = (e) => {
+    e.preventDefault();
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((auth) => {
+        if (auth) {
+          history.push("/");
+        }
+      })
+      .catch((error) => alert(error.message));
   };
 
   return (
