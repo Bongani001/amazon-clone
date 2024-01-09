@@ -13,6 +13,10 @@ export const ShoppingState = (props) => {
     dispatch({ type: "ADD_TO_BASKET", payload: item });
   };
 
+  const removeFromBasket = (item) => {
+    dispatch({type: "REMOVE_FROM_BASKET", payload: item})
+  }
+
   const setUser = (user) => {
     dispatch({ type: "SET_USER", payload: user });
   };
@@ -24,6 +28,7 @@ export const ShoppingState = (props) => {
         user: state.user,
         getBasketTotal,
         addToBasket,
+        removeFromBasket,
         setUser
       }}
     >

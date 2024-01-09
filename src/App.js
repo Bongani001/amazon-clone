@@ -6,6 +6,7 @@ import Products from "./components/Products";
 import Header from "./components/layout/Header";
 import ProductDetails from "./components/ProductDetails";
 import Login from "./components/Login";
+import Checkout from "./components/Checkout";
 import NotFound from "./components/NotFound";
 import ShoppingContext from "./context/shopping/shoppingContext";
 import { auth } from "./firebase";
@@ -44,6 +45,9 @@ const App = () => {
           </Route>
           <Route path="/products/:id">
             <ProductDetails />
+          </Route>
+          <Route path="/checkout">
+            <Checkout />
           </Route>
           <Route path="/login">
             <Login />
