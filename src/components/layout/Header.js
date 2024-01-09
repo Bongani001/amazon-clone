@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import AuthContext from "../../context/authContext";
 import ShoppingContext from "../../context/shopping/shoppingContext";
 import { auth } from "../../firebase";
 
@@ -31,9 +30,9 @@ const Header = () => {
         <SearchIcon className="search_icon" />
       </div>
       <div className="header_nav">
-        <Link to={!user && "/login"}>
+        <Link to={!user ? "/login" : "/"}>
           <div className="header_option" onClick={handleAuthentication}>
-            <span className="header_optionOne">Hello {!user ? "Guest" : user.email}</span>
+            <span className="header_optionOne">Hello {!user? "Guest" : user.email}</span>
             <span className="header_optionTwo">{user ? "Sign Out" : "Sign in"}</span>
           </div>
         </Link>
@@ -48,7 +47,7 @@ const Header = () => {
         <div className="header_optionBasket">
           <ShoppingBasketIcon />
           <span className="header_optionTwo header_basketCount">
-            {basket.length}
+            {basket?.length}
           </span>
         </div>
       </div>

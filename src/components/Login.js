@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "./Login.css";
-import ShoppingContext from "../context/shopping/shoppingContext";
 import { auth } from "../firebase";
 
 const Login = () => {
@@ -9,8 +8,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const history = useHistory();
 
-  const shoppingContext = useContext(ShoppingContext);
-  const { user } = shoppingContext;
   // useEffect(() => {
   //   const identifier = setTimeout(() => {
   //     console.log("checkinf for validity");
@@ -84,7 +81,7 @@ const Login = () => {
           Sale. Please see our Privacy Notice, our Cookie Notice and our
           Interest-Based Ads Notice.
         </p>
-        <button className="login-registerButton">
+        <button className="login-registerButton" onClick={register}>
           Create your Amazon Account
         </button>
       </div>
