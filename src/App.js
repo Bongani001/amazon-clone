@@ -10,6 +10,7 @@ import Checkout from "./components/Checkout";
 import NotFound from "./components/NotFound";
 import ShoppingContext from "./context/shopping/shoppingContext";
 import { auth } from "./firebase";
+import Payment from "./components/Payment";
 
 const App = () => {
   const shoppingContext = useContext(ShoppingContext);
@@ -48,6 +49,9 @@ const App = () => {
           </Route>
           <Route path="/checkout">
             <Checkout />
+          </Route>
+          <Route path="/payment">
+            <Payment />
           </Route>
           <Route path="/login">
             <Login />
