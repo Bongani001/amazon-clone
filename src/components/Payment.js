@@ -5,11 +5,12 @@ import { Link, useHistory } from "react-router-dom";
 import ShoppingContext from "../context/shopping/shoppingContext";
 import CheckoutProduct from "./CheckoutProduct";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { db } from "../firebase";
 import "./Payment.css";
 
 const Payment = () => {
   const shoppingContext = useContext(ShoppingContext);
-  const { basket, user, getBasketTotal } = shoppingContext;
+  const { basket, user, getBasketTotal, emptyBasket } = shoppingContext;
 
   const history = useHistory();
 
@@ -45,9 +46,21 @@ const Payment = () => {
         payment_method: { card: elements.getElement(CardElement) },
       })
       .then(({ paymentIntent }) => {
+        db.collection("user")
+          .doc(user?.uid)
+          .collection("orders")
+          .doc(paymentIntent.id)
+          .set({
+            basket: basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          });
         setSucceeded(true);
         setError(null);
         setProcessing(false);
+        // Empty basket
+        emptyBasket();
+        // Redirect the user to orders page
         history.push("/orders");
       });
   };

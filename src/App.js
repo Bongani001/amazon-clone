@@ -13,6 +13,7 @@ import NotFound from "./components/NotFound";
 import ShoppingContext from "./context/shopping/shoppingContext";
 import { auth } from "./firebase";
 import Payment from "./components/Payment";
+import Orders from "./components/Orders";
 
 const promise = loadStripe(
   "pk_test_51OX0x3B8NuuPSxTpwbIcBbErFCC0CllPZH8wcDtwCv8Bu9TOa6l0RKmK4Rrr3TvwLncT6nMXOGsLsdPcOQaCM8rA00hPutHWzu"
@@ -58,6 +59,9 @@ const App = () => {
             <Elements stripe={promise}>
               <Payment />
             </Elements>
+          </Route>
+          <Route path="/orders">
+            <Orders />
           </Route>
           <Route path="/login">
             <Login />
